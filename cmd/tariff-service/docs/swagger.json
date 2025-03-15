@@ -1,0 +1,154 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "API для управления тарифами",
+        "title": "Tariff Service API",
+        "contact": {},
+        "version": "1.0"
+    },
+    "host": "localhost:8081",
+    "basePath": "/",
+    "paths": {
+        "/tariffs": {
+            "get": {
+                "description": "Возвращает список всех тарифов в системе",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tariffs"
+                ],
+                "summary": "Получить все тарифы",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.Tariff"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/tariffs/create": {
+            "post": {
+                "description": "Добавляет новый тариф в систему",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tariffs"
+                ],
+                "summary": "Создать тариф",
+                "parameters": [
+                    {
+                        "description": "Данные нового тарифа",
+                        "name": "tariff",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.TariffRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/models.TariffRequest"
+                        }
+                    }
+                }
+            }
+        },
+        "/tariffs/get": {
+            "get": {
+                "description": "Возвращает данные тарифа по его идентификатору",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tariffs"
+                ],
+                "summary": "Получить тариф по ID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "ID тарифа",
+                        "name": "id",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Tariff"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "models.Tariff": {
+            "type": "object",
+            "properties": {
+                "action_type": {
+                    "description": "Тип действия (например, \"Обработка документа\")",
+                    "type": "string",
+                    "example": "Обработка документа"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "price": {
+                    "description": "Цена тарифа",
+                    "type": "number",
+                    "example": 100.5
+                },
+                "valid_from": {
+                    "description": "Начало действия тарифа",
+                    "type": "string",
+                    "example": "2025-03-14"
+                },
+                "valid_until": {
+                    "description": "Окончание действия тарифа",
+                    "type": "string",
+                    "example": "2025-12-31"
+                }
+            }
+        },
+        "models.TariffRequest": {
+            "type": "object",
+            "properties": {
+                "action_type": {
+                    "description": "Тип действия (например, \"Обработка документа\")",
+                    "type": "string",
+                    "example": "Обработка документа"
+                },
+                "price": {
+                    "description": "Цена тарифа",
+                    "type": "number",
+                    "example": 10.5
+                },
+                "valid_from": {
+                    "description": "Начало действия тарифа",
+                    "type": "string",
+                    "example": "2025-03-14"
+                },
+                "valid_until": {
+                    "description": "Окончание действия тарифа",
+                    "type": "string",
+                    "example": "2025-12-31"
+                }
+            }
+        }
+    }
+}

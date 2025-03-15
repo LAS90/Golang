@@ -1,0 +1,106 @@
+basePath: /
+definitions:
+  models.Tariff:
+    properties:
+      action_type:
+        description: Тип действия (например, "Обработка документа")
+        example: Обработка документа
+        type: string
+      id:
+        type: integer
+      price:
+        description: Цена тарифа
+        example: 100.5
+        type: number
+      valid_from:
+        description: Начало действия тарифа
+        example: "2025-03-14"
+        type: string
+      valid_until:
+        description: Окончание действия тарифа
+        example: "2025-12-31"
+        type: string
+    type: object
+  models.TariffRequest:
+    properties:
+      action_type:
+        description: Тип действия (например, "Обработка документа")
+        example: Обработка документа
+        type: string
+      price:
+        description: Цена тарифа
+        example: 10.5
+        type: number
+      valid_from:
+        description: Начало действия тарифа
+        example: "2025-03-14"
+        type: string
+      valid_until:
+        description: Окончание действия тарифа
+        example: "2025-12-31"
+        type: string
+    type: object
+host: localhost:8081
+info:
+  contact: {}
+  description: API для управления тарифами
+  title: Tariff Service API
+  version: "1.0"
+paths:
+  /tariffs:
+    get:
+      description: Возвращает список всех тарифов в системе
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Tariff'
+            type: array
+      summary: Получить все тарифы
+      tags:
+      - tariffs
+  /tariffs/create:
+    post:
+      consumes:
+      - application/json
+      description: Добавляет новый тариф в систему
+      parameters:
+      - description: Данные нового тарифа
+        in: body
+        name: tariff
+        required: true
+        schema:
+          $ref: '#/definitions/models.TariffRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.TariffRequest'
+      summary: Создать тариф
+      tags:
+      - tariffs
+  /tariffs/get:
+    get:
+      description: Возвращает данные тарифа по его идентификатору
+      parameters:
+      - description: ID тарифа
+        in: query
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Tariff'
+      summary: Получить тариф по ID
+      tags:
+      - tariffs
+swagger: "2.0"

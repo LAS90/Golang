@@ -1,0 +1,75 @@
+basePath: /
+definitions:
+  entities.TransactionRequest:
+    properties:
+      action_type:
+        example: purchase
+        type: string
+      quantity:
+        description: Переименовали Amount в Quantity
+        example: 99.99
+        type: number
+      tariff_id:
+        example: 2
+        type: integer
+      user_id:
+        example: 1
+        type: integer
+    type: object
+  models.Transaction:
+    properties:
+      action_type:
+        type: string
+      created_at:
+        type: string
+      id:
+        type: integer
+      quantity:
+        description: Переименовали Amount в Quantity
+        type: number
+      tariff_id:
+        type: integer
+      total_amount:
+        description: Добавили поле для общей суммы
+        type: number
+      user_id:
+        type: integer
+    type: object
+host: localhost:8082
+info:
+  contact: {}
+  description: API для управления транзакциями
+  title: Transaction Service API
+  version: "1.0"
+paths:
+  /transactions/create:
+    post:
+      consumes:
+      - application/json
+      description: Создает новую финансовую транзакцию
+      parameters:
+      - description: Данные транзакции
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/entities.TransactionRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Созданная транзакция
+          schema:
+            $ref: '#/definitions/models.Transaction'
+        "400":
+          description: Некорректный запрос
+          schema:
+            type: string
+        "500":
+          description: Ошибка сервера
+          schema:
+            type: string
+      summary: Создать транзакцию
+      tags:
+      - Transactions
+swagger: "2.0"
