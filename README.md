@@ -93,6 +93,8 @@ CREATE TABLE tariffs (
     price DECIMAL(10, 2) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+```
+### Transaction Service
 
 База данных для Transaction Service хранит транзакции. Структура таблицы:
 
@@ -107,3 +109,4 @@ CREATE TABLE transactions (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (tariff_id) REFERENCES tariffs(id)
 );
+```
